@@ -1,0 +1,222 @@
+/* ============================================================
+ * FICHIER      : theme.css
+ * AUTEUR       : Ange TEUFACK — Chef de projet & UI/UX Designer
+ * PROJET       : FinTrack — ECAM-EPMI 2025-2026
+ * DESCRIPTION  : Variables CSS thème clair et sombre.
+ *                Palette tech/finance/succès. Polices Bebas Neue,
+ *                Merriweather, Eczar, Work Sans, Rajdhani.
+ * DATE         : Mars 2026
+ * ============================================================ */
+
+/* Import Google Fonts — 5 polices complémentaires */
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Merriweather:wght@400;700;900&family=Eczar:wght@400;500;600;700&family=Work+Sans:wght@300;400;500;600;700&family=Rajdhani:wght@500;600;700&display=swap');
+
+
+/* ============================================================
+ * -- 1. Thème CLAIR (défaut)
+ * ============================================================ */
+:root {
+
+    /* -- Polices -- */
+    --police-hero:       'Bebas Neue', 'Impact', sans-serif;
+    --police-titre:      'Merriweather', 'Georgia', serif;
+    --police-ui:         'Eczar', 'Georgia', serif;
+    --police-corps:      'Work Sans', 'Segoe UI', sans-serif;
+    --police-chiffres:   'Rajdhani', 'Arial', sans-serif;
+    --police-principale: 'Work Sans', 'Segoe UI', sans-serif;
+
+    /* -- Palette principale Tech / Finance -- */
+    --couleur-primaire:            #6C63FF;
+    --couleur-primaire-hover:      #5B52E8;
+    --couleur-primaire-clair:      #EEF2FF;
+    --couleur-primaire-fonce:      #4F46E5;
+
+    --couleur-or:                  #F5A623;
+    --couleur-or-clair:            #FFF8E6;
+
+    --couleur-succes:              #00C896;
+    --couleur-succes-hover:        #00A87D;
+    --couleur-succes-clair:        #E0FBF4;
+
+    --couleur-danger:              #FF4757;
+    --couleur-danger-hover:        #E63950;
+    --couleur-danger-clair:        #FFF0F2;
+
+    --couleur-info:                #0EA5E9;
+    --couleur-info-clair:          #E0F4FE;
+
+    --couleur-avertissement:       #F59E0B;
+    --couleur-avertissement-clair: #FEF3C7;
+
+    --couleur-secondaire:          #0EA5E9;
+
+    /* -- Arrière-plans -- */
+    --bg-corps:                  #F8FAFF;
+    --bg-carte:                  #FFFFFF;
+    --bg-navbar:                 #FFFFFF;
+    --bg-footer:                 #0D1117;
+    --bg-section-alt:            #EEF2FF;
+    --bg-input:                  #FFFFFF;
+    --bg-input-disabled:         #F8FAFC;
+    --bg-tableau:                #FFFFFF;
+    --bg-tableau-ligne-impaire:  #F8FAFF;
+    --bg-tableau-hover:          #F0F4FF;
+    --bg-badge-revenu:           #E0FBF4;
+    --bg-badge-depense:          #FFF0F2;
+    --bg-overlay:                rgba(13,17,23,0.5);
+
+    /* -- Textes -- */
+    --texte-principal:           #0D1117;
+    --texte-secondaire:          #4A5568;
+    --texte-clair:               #8896AB;
+    --texte-inverse:             #FFFFFF;
+    --texte-navbar:              #0D1117;
+    --texte-lien:                #6C63FF;
+    --texte-lien-hover:          #4F46E5;
+    --texte-succes:              #00A87D;
+    --texte-danger:              #E63950;
+    --texte-avertissement:       #B45309;
+
+    /* -- Bordures -- */
+    --bordure-couleur:           #E2E8F4;
+    --bordure-input:             #CBD5E1;
+    --bordure-focus:             #6C63FF;
+    --bordure-carte:             #E8ECF8;
+
+    /* -- Ombres -- */
+    --ombre-xs:          0 1px 3px rgba(108,99,255,0.06);
+    --ombre-sm:          0 2px 8px rgba(108,99,255,0.08);
+    --ombre-md:          0 4px 16px rgba(108,99,255,0.10);
+    --ombre-lg:          0 8px 32px rgba(108,99,255,0.12);
+    --ombre-xl:          0 16px 48px rgba(108,99,255,0.15);
+    --ombre-navbar:      0 1px 0 rgba(0,0,0,0.06), 0 2px 12px rgba(108,99,255,0.06);
+    --ombre-carte:       0 2px 12px rgba(108,99,255,0.07);
+    --ombre-carte-hover: 0 8px 32px rgba(108,99,255,0.18);
+    --ombre-bouton:      0 4px 14px rgba(108,99,255,0.35);
+    --ombre-glow:        0 0 24px rgba(108,99,255,0.22);
+
+    /* -- Transitions -- */
+    --transition-rapide:  0.18s cubic-bezier(0.4,0,0.2,1);
+    --transition-normale: 0.32s cubic-bezier(0.4,0,0.2,1);
+    --transition-lente:   0.55s cubic-bezier(0.4,0,0.2,1);
+    --transition-spring:  0.45s cubic-bezier(0.34,1.56,0.64,1);
+
+    /* -- Arrondis -- */
+    --arrondi-xs:   0.25rem;
+    --arrondi-sm:   0.375rem;
+    --arrondi-md:   0.625rem;
+    --arrondi-lg:   1rem;
+    --arrondi-xl:   1.25rem;
+    --arrondi-2xl:  1.75rem;
+    --arrondi-full: 9999px;
+
+    /* -- Tailles police -- */
+    --taille-xs:    0.72rem;
+    --taille-sm:    0.875rem;
+    --taille-md:    1rem;
+    --taille-lg:    1.125rem;
+    --taille-xl:    1.3rem;
+    --taille-2xl:   1.6rem;
+    --taille-3xl:   2rem;
+
+    /* -- Espacements -- */
+    --espace-navbar: 68px;
+
+    /* -- Dégradés -- */
+    --degrade-primaire: linear-gradient(135deg, #6C63FF 0%, #4F46E5 100%);
+    --degrade-succes:   linear-gradient(135deg, #00C896 0%, #0EA5E9 100%);
+    --degrade-hero:     linear-gradient(150deg, #EEF2FF 0%, #F8FAFF 50%, #E0FBF4 100%);
+    --degrade-or:       linear-gradient(135deg, #F5A623 0%, #F7C948 100%);
+    --degrade-sombre:   linear-gradient(135deg, #0D1117 0%, #161B22 100%);
+}
+
+
+/* ============================================================
+ * -- 2. Thème SOMBRE
+ * ============================================================ */
+[data-theme="dark"] {
+
+    --couleur-primaire:            #8B85FF;
+    --couleur-primaire-hover:      #A09CFF;
+    --couleur-primaire-clair:      #1A1833;
+    --couleur-primaire-fonce:      #6C63FF;
+
+    --couleur-or:                  #F7C948;
+    --couleur-or-clair:            #2A2410;
+
+    --couleur-succes:              #00E5A8;
+    --couleur-succes-hover:        #00C896;
+    --couleur-succes-clair:        #0A2A22;
+
+    --couleur-danger:              #FF6B78;
+    --couleur-danger-hover:        #FF4757;
+    --couleur-danger-clair:        #2A0F13;
+
+    --couleur-info:                #38BDF8;
+    --couleur-info-clair:          #0A1E2A;
+
+    --couleur-avertissement:       #FBBF24;
+    --couleur-avertissement-clair: #2A1F06;
+
+    --couleur-secondaire:          #38BDF8;
+
+    --bg-corps:                  #0D1117;
+    --bg-carte:                  #161B22;
+    --bg-navbar:                 #0D1117;
+    --bg-footer:                 #080C10;
+    --bg-section-alt:            #111827;
+    --bg-input:                  #1C2333;
+    --bg-input-disabled:         #161B22;
+    --bg-tableau:                #161B22;
+    --bg-tableau-ligne-impaire:  #1A2030;
+    --bg-tableau-hover:          #1E2840;
+    --bg-badge-revenu:           #0A2A22;
+    --bg-badge-depense:          #2A0F13;
+    --bg-overlay:                rgba(0,0,0,0.7);
+
+    --texte-principal:           #E6EDF3;
+    --texte-secondaire:          #8B949E;
+    --texte-clair:               #484F58;
+    --texte-inverse:             #0D1117;
+    --texte-navbar:              #E6EDF3;
+    --texte-lien:                #8B85FF;
+    --texte-lien-hover:          #A09CFF;
+    --texte-succes:              #00E5A8;
+    --texte-danger:              #FF6B78;
+    --texte-avertissement:       #FBBF24;
+
+    --bordure-couleur:           #21262D;
+    --bordure-input:             #30363D;
+    --bordure-focus:             #8B85FF;
+    --bordure-carte:             #21262D;
+
+    --ombre-xs:          0 1px 3px rgba(0,0,0,0.35);
+    --ombre-sm:          0 2px 8px rgba(0,0,0,0.45);
+    --ombre-md:          0 4px 16px rgba(0,0,0,0.55);
+    --ombre-lg:          0 8px 32px rgba(0,0,0,0.65);
+    --ombre-xl:          0 16px 48px rgba(0,0,0,0.75);
+    --ombre-navbar:      0 1px 0 rgba(255,255,255,0.04);
+    --ombre-carte:       0 2px 12px rgba(0,0,0,0.45);
+    --ombre-carte-hover: 0 8px 32px rgba(139,133,255,0.22);
+    --ombre-bouton:      0 4px 14px rgba(139,133,255,0.4);
+    --ombre-glow:        0 0 32px rgba(139,133,255,0.32);
+
+    --degrade-primaire: linear-gradient(135deg, #8B85FF 0%, #6C63FF 100%);
+    --degrade-hero:     linear-gradient(150deg, #0D1117 0%, #111827 50%, #0A2A22 100%);
+}
+
+
+/* ============================================================
+ * -- 3. Transitions globales thème
+ * ============================================================ */
+*, *::before, *::after {
+    transition:
+        background-color var(--transition-normale),
+        border-color     var(--transition-normale),
+        color            var(--transition-normale),
+        box-shadow       var(--transition-normale);
+}
+
+canvas, img, video, svg {
+    transition: none;
+}

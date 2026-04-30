@@ -1,0 +1,965 @@
+/* ============================================================
+ * FICHIER      : style.css
+ * AUTEUR       : Ange TEUFACK — Chef de projet & UI/UX Designer
+ * PROJET       : FinTrack — ECAM-EPMI 2025-2026
+ * DESCRIPTION  : CSS global. Responsive, animations scroll,
+ *                navbar fixe, cartes, formulaires, tableaux,
+ *                badges, boutons, footer, effets immersifs.
+ * DATE         : Mars 2026
+ * ============================================================ */
+
+
+/* ============================================================
+ * -- 1. Reset et base
+ * ============================================================ */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin:     0;
+    padding:    0;
+}
+
+html {
+    font-size:       16px;
+    scroll-behavior: smooth;
+    /* Barre de défilement stylisée */
+    scrollbar-width: thin;
+    scrollbar-color: var(--couleur-primaire) var(--bg-corps);
+}
+
+html::-webkit-scrollbar       { width: 6px; }
+html::-webkit-scrollbar-track { background: var(--bg-corps); }
+html::-webkit-scrollbar-thumb { background: var(--couleur-primaire); border-radius: 3px; }
+
+body {
+    font-family:      var(--police-corps);
+    font-size:        var(--taille-md);
+    color:            var(--texte-principal);
+    background-color: var(--bg-corps);
+    line-height:      1.65;
+    padding-top:      var(--espace-navbar);
+    min-height:       100vh;
+    overflow-x:       hidden;
+}
+
+a {
+    color:           var(--texte-lien);
+    text-decoration: none;
+    transition:      color var(--transition-rapide);
+}
+a:hover { color: var(--texte-lien-hover); }
+
+h1, h2, h3 {
+    font-family: var(--police-titre);
+    font-weight: 700;
+    color:       var(--texte-principal);
+    line-height: 1.25;
+}
+
+h4, h5, h6 {
+    font-family: var(--police-ui);
+    font-weight: 600;
+    color:       var(--texte-principal);
+}
+
+img { max-width: 100%; height: auto; }
+ul, ol { list-style: none; }
+
+
+/* ============================================================
+ * -- 2. Animations au scroll (Intersection Observer)
+ * ============================================================ */
+
+/* État initial — éléments invisibles avant animation */
+.scroll-reveal {
+    opacity:    0;
+    transform:  translateY(32px);
+    transition:
+        opacity   0.65s cubic-bezier(0.4,0,0.2,1),
+        transform 0.65s cubic-bezier(0.4,0,0.2,1);
+}
+
+/* Délais en cascade pour les grilles */
+.scroll-reveal:nth-child(1) { transition-delay: 0.05s; }
+.scroll-reveal:nth-child(2) { transition-delay: 0.12s; }
+.scroll-reveal:nth-child(3) { transition-delay: 0.19s; }
+.scroll-reveal:nth-child(4) { transition-delay: 0.26s; }
+.scroll-reveal:nth-child(5) { transition-delay: 0.33s; }
+.scroll-reveal:nth-child(6) { transition-delay: 0.40s; }
+
+/* Déclenché par JS quand l'élément entre dans le viewport */
+.scroll-reveal.visible {
+    opacity:   1;
+    transform: translateY(0);
+}
+
+/* Slide depuis la gauche */
+.scroll-from-left {
+    opacity:    0;
+    transform:  translateX(-40px);
+    transition:
+        opacity   0.65s cubic-bezier(0.4,0,0.2,1),
+        transform 0.65s cubic-bezier(0.4,0,0.2,1);
+}
+.scroll-from-left.visible {
+    opacity:   1;
+    transform: translateX(0);
+}
+
+/* Slide depuis la droite */
+.scroll-from-right {
+    opacity:    0;
+    transform:  translateX(40px);
+    transition:
+        opacity   0.65s cubic-bezier(0.4,0,0.2,1),
+        transform 0.65s cubic-bezier(0.4,0,0.2,1);
+}
+.scroll-from-right.visible {
+    opacity:   1;
+    transform: translateX(0);
+}
+
+/* Zoom depuis le centre */
+.scroll-scale {
+    opacity:    0;
+    transform:  scale(0.88);
+    transition:
+        opacity   0.55s cubic-bezier(0.34,1.56,0.64,1),
+        transform 0.55s cubic-bezier(0.34,1.56,0.64,1);
+}
+.scroll-scale.visible {
+    opacity:   1;
+    transform: scale(1);
+}
+
+/* Compteur animé — les chiffres montent de 0 à la valeur */
+.compteur-anime {
+    display:     inline-block;
+    font-family: var(--police-chiffres);
+    font-weight: 700;
+}
+
+
+/* ============================================================
+ * -- 3. Navbar
+ * ============================================================ */
+.navbar-fintrack {
+    background-color: var(--bg-navbar);
+    box-shadow:       var(--ombre-navbar);
+    border-bottom:    1px solid var(--bordure-couleur);
+    height:           var(--espace-navbar);
+    position:         fixed;
+    top:              0;
+    left:             0;
+    right:            0;
+    z-index:          1000;
+    backdrop-filter:  blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+}
+
+/* Logo */
+.navbar-brand-fintrack {
+    font-family:     var(--police-hero);
+    font-size:       1.6rem;
+    letter-spacing:  2px;
+    color:           var(--couleur-primaire) !important;
+    display:         flex;
+    align-items:     center;
+    gap:             0.5rem;
+}
+
+.navbar-brand-fintrack img.logo-navbar {
+    height:     36px;
+    width:      auto;
+    object-fit: contain;
+}
+
+/* Liens nav */
+.navbar-fintrack .nav-link {
+    font-family:   var(--police-corps);
+    font-weight:   500;
+    font-size:     var(--taille-sm);
+    color:         var(--texte-navbar) !important;
+    padding:       0.45rem 0.8rem !important;
+    border-radius: var(--arrondi-md);
+    transition:    all var(--transition-rapide);
+    white-space:   nowrap;
+}
+
+.navbar-fintrack .nav-link:hover,
+.navbar-fintrack .nav-link.active {
+    background: var(--couleur-primaire-clair);
+    color:      var(--couleur-primaire) !important;
+}
+
+/* Bouton thème */
+.btn-theme-toggle {
+    background:    transparent;
+    border:        1px solid var(--bordure-couleur);
+    border-radius: var(--arrondi-full);
+    width:         40px;
+    height:        40px;
+    display:       flex;
+    align-items:   center;
+    justify-content: center;
+    cursor:        pointer;
+    color:         var(--texte-secondaire);
+    font-size:     1.1rem;
+    flex-shrink:   0;
+    transition:    all var(--transition-rapide);
+}
+
+.btn-theme-toggle:hover {
+    background:   var(--couleur-primaire-clair);
+    color:        var(--couleur-primaire);
+    border-color: var(--couleur-primaire);
+    transform:    rotate(20deg) scale(1.1);
+}
+
+/* Fix hamburger en dark mode */
+[data-theme="dark"] .navbar-toggler-icon {
+    filter: invert(1);
+}
+
+/* ✅ FIX RESPONSIVITÉ — menu mobile ne passe plus sur le hero */
+.navbar-fintrack .navbar-collapse {
+    background: var(--bg-navbar);
+}
+
+@media (max-width: 991px) {
+    .navbar-fintrack .navbar-collapse.show,
+    .navbar-fintrack .navbar-collapse.collapsing {
+        position:     absolute;
+        top:          var(--espace-navbar);
+        left:         0;
+        right:        0;
+        background:   var(--bg-navbar);
+        border-bottom: 1px solid var(--bordure-couleur);
+        padding:      1rem 1.5rem 1.5rem;
+        box-shadow:   var(--ombre-lg);
+        z-index:      999;
+    }
+
+    .navbar-fintrack .navbar-collapse .nav-link {
+        padding: 0.6rem 0.75rem !important;
+        border-bottom: 1px solid var(--bordure-couleur);
+    }
+
+    .navbar-fintrack .navbar-collapse .nav-link:last-child {
+        border-bottom: none;
+    }
+}
+
+
+/* ============================================================
+ * -- 4. Conteneur de page
+ * ============================================================ */
+.page-wrapper {
+    padding:    2rem 0;
+    min-height: calc(100vh - var(--espace-navbar) - 140px);
+}
+
+.page-header {
+    margin-bottom: 2rem;
+}
+
+.page-header .page-title {
+    font-family:   var(--police-titre);
+    font-size:     var(--taille-3xl);
+    font-weight:   900;
+    color:         var(--texte-principal);
+    margin-bottom: 0.4rem;
+}
+
+.page-header .page-subtitle {
+    font-family: var(--police-corps);
+    font-size:   var(--taille-md);
+    color:       var(--texte-secondaire);
+}
+
+.titre-icone {
+    display:         inline-flex;
+    align-items:     center;
+    justify-content: center;
+    width:           48px;
+    height:          48px;
+    background:      var(--couleur-primaire-clair);
+    color:           var(--couleur-primaire);
+    border-radius:   var(--arrondi-lg);
+    font-size:       1.4rem;
+    margin-right:    0.75rem;
+    vertical-align:  middle;
+}
+
+
+/* ============================================================
+ * -- 5. Cartes
+ * ============================================================ */
+.carte {
+    background:    var(--bg-carte);
+    border:        1px solid var(--bordure-carte);
+    border-radius: var(--arrondi-xl);
+    box-shadow:    var(--ombre-carte);
+    padding:       1.5rem;
+    transition:
+        box-shadow var(--transition-normale),
+        transform  var(--transition-normale);
+}
+
+.carte:hover,
+.carte-hover:hover {
+    box-shadow: var(--ombre-carte-hover);
+    transform:  translateY(-3px);
+}
+
+.carte-header {
+    display:         flex;
+    align-items:     center;
+    justify-content: space-between;
+    margin-bottom:   1.25rem;
+    padding-bottom:  1rem;
+    border-bottom:   1px solid var(--bordure-couleur);
+}
+
+.carte-header .carte-titre {
+    font-family: var(--police-ui);
+    font-size:   var(--taille-lg);
+    font-weight: 700;
+    color:       var(--texte-principal);
+    margin:      0;
+}
+
+
+/* ============================================================
+ * -- 6. Cartes statistiques (dashboard)
+ * ============================================================ */
+.carte-stat {
+    background:    var(--bg-carte);
+    border:        1px solid var(--bordure-carte);
+    border-radius: var(--arrondi-xl);
+    box-shadow:    var(--ombre-carte);
+    padding:       1.5rem;
+    display:       flex;
+    align-items:   center;
+    gap:           1.25rem;
+    transition:    all var(--transition-spring);
+    overflow:      hidden;
+    position:      relative;
+}
+
+.carte-stat::before {
+    content:       '';
+    position:      absolute;
+    left:          0;
+    top:           0;
+    bottom:        0;
+    width:         4px;
+    background:    var(--couleur-accent-stat, var(--couleur-primaire));
+    border-radius: 0 2px 2px 0;
+}
+
+.carte-stat:hover {
+    box-shadow: var(--ombre-carte-hover);
+    transform:  translateY(-4px) scale(1.01);
+}
+
+.carte-stat .stat-icone {
+    width:           56px;
+    height:          56px;
+    border-radius:   var(--arrondi-lg);
+    display:         flex;
+    align-items:     center;
+    justify-content: center;
+    font-size:       1.6rem;
+    flex-shrink:     0;
+}
+
+.carte-stat .stat-corps { flex: 1; }
+
+.carte-stat .stat-label {
+    font-family:    var(--police-corps);
+    font-size:      var(--taille-xs);
+    font-weight:    600;
+    color:          var(--texte-secondaire);
+    text-transform: uppercase;
+    letter-spacing: 0.6px;
+    margin-bottom:  0.25rem;
+}
+
+.carte-stat .stat-valeur {
+    font-family: var(--police-chiffres);
+    font-size:   1.75rem;
+    font-weight: 700;
+    color:       var(--texte-principal);
+    line-height: 1;
+}
+
+.carte-stat .stat-evolution {
+    font-family: var(--police-corps);
+    font-size:   var(--taille-xs);
+    font-weight: 600;
+    margin-top:  0.3rem;
+}
+
+/* Variantes accent */
+.carte-stat-succes  { --couleur-accent-stat: var(--couleur-succes); }
+.carte-stat-danger  { --couleur-accent-stat: var(--couleur-danger); }
+.carte-stat-info    { --couleur-accent-stat: var(--couleur-info); }
+.carte-stat-warning { --couleur-accent-stat: var(--couleur-avertissement); }
+
+/* Variantes icônes */
+.icone-succes   { background: var(--couleur-succes-clair);        color: var(--couleur-succes); }
+.icone-danger   { background: var(--couleur-danger-clair);        color: var(--couleur-danger); }
+.icone-info     { background: var(--couleur-info-clair);          color: var(--couleur-info); }
+.icone-warning  { background: var(--couleur-avertissement-clair); color: var(--couleur-avertissement); }
+.icone-primaire { background: var(--couleur-primaire-clair);      color: var(--couleur-primaire); }
+.icone-or       { background: var(--couleur-or-clair);            color: var(--couleur-or); }
+
+
+/* ============================================================
+ * -- 7. État vide (quand aucune donnée)
+ * ============================================================ */
+.etat-vide {
+    text-align: center;
+    padding:    3.5rem 1.5rem;
+    color:      var(--texte-secondaire);
+}
+
+.etat-vide-icone {
+    font-size:     3.5rem;
+    margin-bottom: 1.25rem;
+    display:       block;
+    opacity:       0.5;
+    animation:     flottement 3s ease-in-out infinite;
+}
+
+@keyframes flottement {
+    0%, 100% { transform: translateY(0); }
+    50%       { transform: translateY(-8px); }
+}
+
+.etat-vide-titre {
+    font-family:   var(--police-ui);
+    font-size:     var(--taille-xl);
+    font-weight:   700;
+    margin-bottom: 0.5rem;
+    color:         var(--texte-principal);
+}
+
+.etat-vide-texte {
+    font-family: var(--police-corps);
+    font-size:   var(--taille-md);
+    color:       var(--texte-secondaire);
+    margin-bottom: 1.5rem;
+}
+
+
+/* ============================================================
+ * -- 8. Formulaires
+ * ============================================================ */
+.form-group-fintrack { margin-bottom: 1.25rem; }
+
+.form-label-fintrack {
+    font-family:   var(--police-corps);
+    font-size:     var(--taille-sm);
+    font-weight:   600;
+    color:         var(--texte-principal);
+    display:       block;
+    margin-bottom: 0.4rem;
+}
+
+.champ-obligatoire::after {
+    content: ' *';
+    color:   var(--couleur-danger);
+}
+
+.form-control-fintrack,
+.form-select-fintrack {
+    width:         100%;
+    padding:       0.65rem 0.9rem;
+    font-size:     var(--taille-sm);
+    font-family:   var(--police-corps);
+    color:         var(--texte-principal);
+    background:    var(--bg-input);
+    border:        1.5px solid var(--bordure-input);
+    border-radius: var(--arrondi-md);
+    outline:       none;
+    transition:    border-color var(--transition-rapide), box-shadow var(--transition-rapide);
+    appearance:    none;
+}
+
+.form-control-fintrack:focus,
+.form-select-fintrack:focus {
+    border-color: var(--bordure-focus);
+    box-shadow:   0 0 0 3px rgba(108,99,255,0.14);
+}
+
+.form-control-fintrack::placeholder { color: var(--texte-clair); }
+textarea.form-control-fintrack { resize: vertical; min-height: 110px; }
+
+.champ-invalide {
+    border-color: var(--couleur-danger) !important;
+    box-shadow:   0 0 0 3px rgba(255,71,87,0.12) !important;
+}
+
+.champ-valide {
+    border-color: var(--couleur-succes) !important;
+}
+
+.message-erreur-champ {
+    font-size:   var(--taille-xs);
+    color:       var(--couleur-danger);
+    margin-top:  0.3rem;
+    font-weight: 500;
+}
+
+/* Multi-select catégories */
+.multi-select-wrapper {
+    border:        1.5px solid var(--bordure-input);
+    border-radius: var(--arrondi-md);
+    background:    var(--bg-input);
+    max-height:    220px;
+    overflow-y:    auto;
+    padding:       0.5rem;
+    scrollbar-width: thin;
+    scrollbar-color: var(--couleur-primaire) var(--bg-input);
+}
+
+.multi-select-wrapper:focus-within {
+    border-color: var(--bordure-focus);
+    box-shadow:   0 0 0 3px rgba(108,99,255,0.14);
+}
+
+.multi-select-item {
+    display:       flex;
+    align-items:   center;
+    gap:           0.5rem;
+    padding:       0.4rem 0.6rem;
+    border-radius: var(--arrondi-sm);
+    cursor:        pointer;
+    font-size:     var(--taille-sm);
+    color:         var(--texte-principal);
+    transition:    background var(--transition-rapide);
+    user-select:   none;
+}
+
+.multi-select-item:hover {
+    background: var(--couleur-primaire-clair);
+}
+
+.multi-select-item input[type="checkbox"] {
+    width:         16px;
+    height:        16px;
+    accent-color:  var(--couleur-primaire);
+    flex-shrink:   0;
+    cursor:        pointer;
+}
+
+.multi-select-item.selected {
+    background: var(--couleur-primaire-clair);
+    color:      var(--couleur-primaire);
+    font-weight: 600;
+}
+
+/* Bouton tout sélectionner */
+.btn-tout-selectionner {
+    width:         100%;
+    padding:       0.4rem 0.75rem;
+    background:    var(--degrade-primaire);
+    color:         white;
+    border:        none;
+    border-radius: var(--arrondi-sm);
+    font-size:     var(--taille-xs);
+    font-weight:   700;
+    cursor:        pointer;
+    margin-bottom: 0.5rem;
+    font-family:   var(--police-corps);
+    transition:    opacity var(--transition-rapide);
+}
+
+.btn-tout-selectionner:hover { opacity: 0.88; }
+
+
+/* ============================================================
+ * -- 9. Boutons
+ * ============================================================ */
+.btn-fintrack {
+    display:         inline-flex;
+    align-items:     center;
+    justify-content: center;
+    gap:             0.45rem;
+    padding:         0.65rem 1.3rem;
+    font-family:     var(--police-corps);
+    font-size:       var(--taille-sm);
+    font-weight:     600;
+    border-radius:   var(--arrondi-md);
+    border:          1.5px solid transparent;
+    cursor:          pointer;
+    text-decoration: none;
+    transition:      all var(--transition-spring);
+    white-space:     nowrap;
+    user-select:     none;
+    position:        relative;
+    overflow:        hidden;
+}
+
+/* Effet de brillance au survol */
+.btn-fintrack::after {
+    content:    '';
+    position:   absolute;
+    inset:      0;
+    background: rgba(255,255,255,0);
+    transition: background var(--transition-rapide);
+}
+.btn-fintrack:hover::after { background: rgba(255,255,255,0.08); }
+
+.btn-primaire {
+    background: var(--degrade-primaire);
+    color:      white;
+    box-shadow: var(--ombre-bouton);
+}
+.btn-primaire:hover {
+    color:     white;
+    transform: translateY(-2px);
+    box-shadow: 0 6px 20px rgba(108,99,255,0.45);
+}
+
+.btn-succes {
+    background: var(--degrade-succes);
+    color:      white;
+}
+.btn-succes:hover { color: white; transform: translateY(-2px); }
+
+.btn-outline {
+    background:   transparent;
+    color:        var(--couleur-primaire);
+    border-color: var(--couleur-primaire);
+}
+.btn-outline:hover {
+    background: var(--couleur-primaire-clair);
+    color:      var(--couleur-primaire);
+}
+
+.btn-danger {
+    background: var(--couleur-danger);
+    color:      white;
+}
+.btn-danger:hover { background: var(--couleur-danger-hover); color: white; transform: translateY(-2px); }
+
+.btn-or {
+    background: var(--degrade-or);
+    color:      white;
+}
+.btn-or:hover { transform: translateY(-2px); color: white; }
+
+.btn-lg { padding: 0.8rem 1.8rem; font-size: var(--taille-md); }
+.btn-bloc { width: 100%; }
+.btn-fintrack:disabled { opacity: 0.5; cursor: not-allowed; transform: none !important; }
+
+
+/* ============================================================
+ * -- 10. Badges
+ * ============================================================ */
+.badge-fintrack {
+    display:       inline-flex;
+    align-items:   center;
+    gap:           0.25rem;
+    padding:       0.22rem 0.65rem;
+    font-family:   var(--police-corps);
+    font-size:     var(--taille-xs);
+    font-weight:   700;
+    border-radius: var(--arrondi-full);
+    white-space:   nowrap;
+}
+
+.badge-revenu    { background: var(--bg-badge-revenu);  color: var(--texte-succes); }
+.badge-depense   { background: var(--bg-badge-depense); color: var(--texte-danger); }
+.badge-categorie { background: var(--couleur-primaire-clair); color: var(--couleur-primaire); }
+.badge-info      { background: var(--couleur-info-clair); color: var(--couleur-info); }
+
+
+/* ============================================================
+ * -- 11. Tableaux
+ * ============================================================ */
+.tableau-wrapper {
+    overflow-x:    auto;
+    border-radius: var(--arrondi-xl);
+    box-shadow:    var(--ombre-carte);
+}
+
+.tableau-fintrack {
+    width:           100%;
+    border-collapse: collapse;
+    background:      var(--bg-tableau);
+    font-family:     var(--police-corps);
+    font-size:       var(--taille-sm);
+}
+
+.tableau-fintrack thead th {
+    background:     var(--bg-corps);
+    color:          var(--texte-secondaire);
+    font-weight:    700;
+    font-size:      var(--taille-xs);
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    padding:        0.9rem 1rem;
+    border-bottom:  2px solid var(--bordure-couleur);
+    white-space:    nowrap;
+}
+
+.tableau-fintrack tbody td {
+    padding:        0.85rem 1rem;
+    border-bottom:  1px solid var(--bordure-couleur);
+    color:          var(--texte-principal);
+    vertical-align: middle;
+}
+
+.tableau-fintrack tbody tr:nth-child(odd) td { background: var(--bg-tableau-ligne-impaire); }
+
+.tableau-fintrack tbody tr {
+    transition: background var(--transition-rapide);
+}
+.tableau-fintrack tbody tr:hover td { background: var(--bg-tableau-hover); }
+.tableau-fintrack tbody tr:last-child td { border-bottom: none; }
+
+.tableau-fintrack .col-montant {
+    text-align:           right;
+    font-family:          var(--police-chiffres);
+    font-weight:          700;
+    font-variant-numeric: tabular-nums;
+}
+
+.montant-revenu  { color: var(--couleur-succes) !important; }
+.montant-depense { color: var(--couleur-danger) !important; }
+
+
+/* ============================================================
+ * -- 12. Alertes
+ * ============================================================ */
+.alerte {
+    padding:       1rem 1.25rem;
+    border-radius: var(--arrondi-lg);
+    font-family:   var(--police-corps);
+    font-size:     var(--taille-sm);
+    font-weight:   500;
+    display:       flex;
+    align-items:   flex-start;
+    gap:           0.75rem;
+    border:        1.5px solid transparent;
+    margin-bottom: 1rem;
+}
+
+.alerte-succes  { background: var(--couleur-succes-clair);        color: var(--texte-succes);        border-color: var(--couleur-succes); }
+.alerte-erreur  { background: var(--couleur-danger-clair);        color: var(--texte-danger);        border-color: var(--couleur-danger); }
+.alerte-warning { background: var(--couleur-avertissement-clair); color: var(--texte-avertissement); border-color: var(--couleur-avertissement); }
+.alerte-info    { background: var(--couleur-info-clair);          color: var(--couleur-info);        border-color: var(--couleur-info); }
+
+.alerte .alerte-icone { font-size: 1.2rem; flex-shrink: 0; margin-top: 0.05rem; }
+
+
+/* ============================================================
+ * -- 13. Graphiques Chart.js
+ * ============================================================ */
+.graphe-conteneur { position: relative; width: 100%; }
+.graphe-md  { height: 280px; }
+.graphe-lg  { height: 360px; }
+.graphe-xl  { height: 420px; }
+.graphe-conteneur canvas { width: 100% !important; max-width: 100%; }
+
+
+/* ============================================================
+ * -- 14. Filtres de période
+ * ============================================================ */
+.filtre-periode {
+    display:   flex;
+    gap:       0.35rem;
+    flex-wrap: wrap;
+}
+
+.filtre-btn {
+    padding:       0.38rem 0.85rem;
+    font-family:   var(--police-corps);
+    font-size:     var(--taille-xs);
+    font-weight:   600;
+    border:        1.5px solid var(--bordure-couleur);
+    border-radius: var(--arrondi-full);
+    background:    transparent;
+    color:         var(--texte-secondaire);
+    cursor:        pointer;
+    transition:    all var(--transition-rapide);
+}
+
+.filtre-btn.actif,
+.filtre-btn:hover {
+    background:   var(--degrade-primaire);
+    color:        white;
+    border-color: var(--couleur-primaire);
+}
+
+
+/* ============================================================
+ * -- 15. Loader
+ * ============================================================ */
+.loader-fintrack {
+    display:         flex;
+    align-items:     center;
+    justify-content: center;
+    padding:         2rem;
+    gap:             0.75rem;
+    color:           var(--texte-secondaire);
+    font-family:     var(--police-corps);
+    font-size:       var(--taille-sm);
+}
+
+.spinner {
+    width:         28px;
+    height:        28px;
+    border:        3px solid var(--bordure-couleur);
+    border-top:    3px solid var(--couleur-primaire);
+    border-radius: 50%;
+    animation:     rotation 0.7s linear infinite;
+}
+
+@keyframes rotation { to { transform: rotate(360deg); } }
+
+
+/* ============================================================
+ * -- 16. Footer
+ * ============================================================ */
+.footer-fintrack {
+    background:  var(--bg-footer);
+    color:       #8B949E;
+    padding:     2.5rem 0;
+    margin-top:  4rem;
+    font-family: var(--police-corps);
+    font-size:   var(--taille-sm);
+}
+
+.footer-fintrack .footer-texte { text-align: center; }
+
+.footer-fintrack .footer-logo {
+    font-family:   var(--police-hero);
+    font-size:     1.5rem;
+    letter-spacing: 2px;
+    color:         var(--couleur-primaire);
+    display:       block;
+    margin-bottom: 0.5rem;
+}
+
+.footer-fintrack a { color: #8B949E; transition: color var(--transition-rapide); }
+.footer-fintrack a:hover { color: var(--couleur-primaire); }
+
+
+/* ============================================================
+ * -- 17. Bouton scroll vers le haut
+ * ============================================================ */
+#btn-scroll-haut {
+    position:      fixed;
+    bottom:        2rem;
+    right:         2rem;
+    width:         46px;
+    height:        46px;
+    border-radius: 50%;
+    background:    var(--degrade-primaire);
+    color:         white;
+    border:        none;
+    font-size:     1.2rem;
+    font-weight:   700;
+    cursor:        pointer;
+    display:       none;
+    align-items:   center;
+    justify-content: center;
+    z-index:       500;
+    box-shadow:    var(--ombre-bouton);
+    transition:    all var(--transition-spring);
+}
+
+#btn-scroll-haut:hover {
+    transform:  scale(1.15) translateY(-3px);
+    box-shadow: var(--ombre-glow);
+}
+
+
+/* ============================================================
+ * -- 18. Séparateur et utilitaires
+ * ============================================================ */
+.separateur {
+    border:     none;
+    border-top: 1px solid var(--bordure-couleur);
+    margin:     1.5rem 0;
+}
+
+.texte-tronque { overflow: hidden; white-space: nowrap; text-overflow: ellipsis; }
+
+.texte-succes    { color: var(--couleur-succes) !important; }
+.texte-danger    { color: var(--couleur-danger) !important; }
+.texte-warning   { color: var(--couleur-avertissement) !important; }
+.texte-info      { color: var(--couleur-info) !important; }
+.texte-principal { color: var(--texte-principal) !important; }
+.texte-discret   { color: var(--texte-secondaire) !important; }
+.texte-or        { color: var(--couleur-or) !important; }
+
+
+/* ============================================================
+ * -- 19. Responsive
+ * ============================================================ */
+@media (max-width: 768px) {
+
+    .page-header .page-title { font-size: var(--taille-2xl); }
+
+    .carte-stat { padding: 1rem; }
+    .carte-stat .stat-valeur { font-size: var(--taille-xl); }
+
+    .graphe-md  { height: 220px; }
+    .graphe-lg  { height: 270px; }
+    .graphe-xl  { height: 320px; }
+
+    .filtre-periode {
+        flex-wrap:    nowrap;
+        overflow-x:   auto;
+        padding-bottom: 0.25rem;
+    }
+
+    .grille-stats {
+        grid-template-columns: 1fr 1fr !important;
+    }
+}
+
+@media (max-width: 576px) {
+    .page-wrapper { padding: 1.25rem 0; }
+    .carte { padding: 1.1rem; }
+    .btn-bloc-mobile { width: 100%; }
+
+    .grille-stats {
+        grid-template-columns: 1fr !important;
+    }
+}
+
+
+/* ============================================================
+ * -- Classes manquantes (index.html)
+ * ============================================================ */
+
+/* Grille 5 colonnes pour la section équipe sur la landing page */
+@media (min-width: 992px) {
+    .col-lg-2-4 {
+        flex: 0 0 auto;
+        width: 20%;
+    }
+}
+
+/* Variantes d'icônes pour les cartes fonctionnalités */
+.fonct-icone-succes { background: var(--couleur-succes-clair); color: var(--couleur-succes); }
+.fonct-icone-danger { background: var(--couleur-danger-clair); color: var(--couleur-danger); }
+.fonct-icone-or     { background: var(--couleur-or-clair);     color: var(--couleur-or); }
+
+/* Couleurs des stats dans la section hero */
+.stat-danger { color: var(--couleur-danger); }
+.stat-succes { color: var(--couleur-succes); }
+
+/* Champ honeypot anti-spam (invisible) */
+.honeypot {
+    position: absolute;
+    left: -9999px;
+    height: 0;
+    overflow: hidden;
+}
